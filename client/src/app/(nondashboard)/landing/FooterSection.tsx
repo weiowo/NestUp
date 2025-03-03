@@ -1,13 +1,13 @@
-import Link from "next/link";
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from 'next/link';
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebook,
   faInstagram,
   faTwitter,
   faLinkedin,
   faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-brands-svg-icons';
 
 const FooterSection = () => {
   return (

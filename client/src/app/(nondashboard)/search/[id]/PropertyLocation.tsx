@@ -1,8 +1,8 @@
-import { useGetPropertyQuery } from "@/state/api";
-import { Compass, MapPin } from "lucide-react";
-import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-import React, { useEffect, useRef } from "react";
+import { useGetPropertyQuery } from '@/state/api';
+import { Compass, MapPin } from 'lucide-react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import React, { useEffect, useRef } from 'react';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string;
 
@@ -19,7 +19,7 @@ const PropertyLocation = ({ propertyId }: PropertyDetailsProps) => {
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
-      style: "mapbox://styles/majesticglue/cm6u301pq008b01sl7yk1cnvb",
+      style: 'mapbox://styles/majesticglue/cm6u301pq008b01sl7yk1cnvb',
       center: [
         property.location.coordinates.longitude,
         property.location.coordinates.latitude,
@@ -36,7 +36,7 @@ const PropertyLocation = ({ propertyId }: PropertyDetailsProps) => {
 
     const markerElement = marker.getElement();
     const path = markerElement.querySelector("path[fill='#3FB1CE']");
-    if (path) path.setAttribute("fill", "#000000");
+    if (path) path.setAttribute('fill', '#000000');
 
     return () => map.remove();
   }, [property, isError, isLoading]);
@@ -56,12 +56,12 @@ const PropertyLocation = ({ propertyId }: PropertyDetailsProps) => {
           <MapPin className="w-4 h-4 mr-1 text-gray-700" />
           Property Address:
           <span className="ml-2 font-semibold text-gray-700">
-            {property.location?.address || "Address not available"}
+            {property.location?.address || 'Address not available'}
           </span>
         </div>
         <a
           href={`https://maps.google.com/?q=${encodeURIComponent(
-            property.location?.address || ""
+            property.location?.address || '',
           )}`}
           target="_blank"
           rel="noopener noreferrer"

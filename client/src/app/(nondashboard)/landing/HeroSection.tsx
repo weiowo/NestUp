@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
-import { setFilters } from "@/state";
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import { setFilters } from '@/state';
 
 const HeroSection = () => {
   const dispatch = useDispatch();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
 
   const handleLocationSearch = async () => {
@@ -21,10 +21,10 @@ const HeroSection = () => {
 
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          trimmedQuery
+          trimmedQuery,
         )}.json?access_token=${
           process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
-        }&fuzzyMatch=true`
+        }&fuzzyMatch=true`,
       );
       const data = await response.json();
       if (data.features && data.features.length > 0) {
@@ -33,7 +33,7 @@ const HeroSection = () => {
           setFilters({
             location: trimmedQuery,
             coordinates: [lat, lng],
-          })
+          }),
         );
         const params = new URLSearchParams({
           location: trimmedQuery,
@@ -43,7 +43,7 @@ const HeroSection = () => {
         router.push(`/search?${params.toString()}`);
       }
     } catch (error) {
-      console.error("error search location:", error);
+      console.error('error search location:', error);
     }
   };
 

@@ -1,23 +1,23 @@
-import { FiltersState, initialState, setFilters } from "@/state";
-import { useAppSelector } from "@/state/redux";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { debounce } from "lodash";
-import { cleanParams, cn, formatEnumString } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
-import { AmenityIcons, PropertyTypeIcons } from "@/lib/constants";
-import { Slider } from "@/components/ui/slider";
+import { FiltersState, initialState, setFilters } from '@/state';
+import { useAppSelector } from '@/state/redux';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { debounce } from 'lodash';
+import { cleanParams, cn, formatEnumString } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Search } from 'lucide-react';
+import { AmenityIcons, PropertyTypeIcons } from '@/lib/constants';
+import { Slider } from '@/components/ui/slider';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
+} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
 
 const FiltersFull = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const FiltersFull = () => {
   const filters = useAppSelector((state) => state.global.filters);
   const [localFilters, setLocalFilters] = useState(initialState.filters);
   const isFiltersFullOpen = useAppSelector(
-    (state) => state.global.isFiltersFullOpen
+    (state) => state.global.isFiltersFullOpen,
   );
 
   const updateURL = debounce((newFilters: FiltersState) => {
@@ -36,7 +36,7 @@ const FiltersFull = () => {
     Object.entries(cleanFilters).forEach(([key, value]) => {
       updatedSearchParams.set(
         key,
-        Array.isArray(value) ? value.join(",") : value.toString()
+        Array.isArray(value) ? value.join(',') : value.toString(),
       );
     });
 
@@ -67,10 +67,10 @@ const FiltersFull = () => {
     try {
       const response = await fetch(
         `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          localFilters.location
+          localFilters.location,
         )}.json?access_token=${
           process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
-        }&fuzzyMatch=true`
+        }&fuzzyMatch=true`,
       );
       const data = await response.json();
       if (data.features && data.features.length > 0) {
@@ -81,7 +81,7 @@ const FiltersFull = () => {
         }));
       }
     } catch (err) {
-      console.error("Error search location:", err);
+      console.error('Error search location:', err);
     }
   };
 
@@ -122,10 +122,10 @@ const FiltersFull = () => {
               <div
                 key={type}
                 className={cn(
-                  "flex flex-col items-center justify-center p-4 border rounded-xl cursor-pointer",
+                  'flex flex-col items-center justify-center p-4 border rounded-xl cursor-pointer',
                   localFilters.propertyType === type
-                    ? "border-black"
-                    : "border-gray-200"
+                    ? 'border-black'
+                    : 'border-gray-200',
                 )}
                 onClick={() =>
                   setLocalFilters((prev) => ({
@@ -170,7 +170,7 @@ const FiltersFull = () => {
           <div className="flex-1">
             <h4 className="font-bold mb-2">Beds</h4>
             <Select
-              value={localFilters.beds || "any"}
+              value={localFilters.beds || 'any'}
               onValueChange={(value) =>
                 setLocalFilters((prev) => ({ ...prev, beds: value }))
               }
@@ -190,7 +190,7 @@ const FiltersFull = () => {
           <div className="flex-1">
             <h4 className="font-bold mb-2">Baths</h4>
             <Select
-              value={localFilters.baths || "any"}
+              value={localFilters.baths || 'any'}
               onValueChange={(value) =>
                 setLocalFilters((prev) => ({ ...prev, baths: value }))
               }
@@ -241,10 +241,10 @@ const FiltersFull = () => {
               <div
                 key={amenity}
                 className={cn(
-                  "flex items-center space-x-2 p-2 border rounded-lg hover:cursor-pointer",
+                  'flex items-center space-x-2 p-2 border rounded-lg hover:cursor-pointer',
                   localFilters.amenities.includes(amenity as AmenityEnum)
-                    ? "border-black"
-                    : "border-gray-200"
+                    ? 'border-black'
+                    : 'border-gray-200',
                 )}
                 onClick={() => handleAmenityChange(amenity as AmenityEnum)}
               >
@@ -263,14 +263,14 @@ const FiltersFull = () => {
           <Input
             type="date"
             value={
-              localFilters.availableFrom !== "any"
+              localFilters.availableFrom !== 'any'
                 ? localFilters.availableFrom
-                : ""
+                : ''
             }
             onChange={(e) =>
               setLocalFilters((prev) => ({
                 ...prev,
-                availableFrom: e.target.value ? e.target.value : "any",
+                availableFrom: e.target.value ? e.target.value : 'any',
               }))
             }
             className="rounded-xl"

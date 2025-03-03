@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
-import React, { useState } from "react";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import React, { useState } from 'react';
 
 const ImagePreviews = ({ images }: ImagePreviewsProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -21,7 +21,7 @@ const ImagePreviews = ({ images }: ImagePreviewsProps) => {
         <div
           key={image}
           className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-            index === currentImageIndex ? "opacity-100" : "opacity-0"
+            index === currentImageIndex ? 'opacity-100' : 'opacity-0'
           }`}
         >
           <Image

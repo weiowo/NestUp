@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import React from "react";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import Image from 'next/image';
+import React from 'react';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const CallToActionSection = () => {
   return (
@@ -35,7 +35,7 @@ const CallToActionSection = () => {
             </p>
             <div className="flex justify-center md:justify-start gap-4">
               <button
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="inline-block text-primary-700 bg-white rounded-lg px-6 py-3 font-semibold hover:bg-primary-500 hover:text-primary-50"
               >
                 Search

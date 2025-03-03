@@ -1,10 +1,10 @@
-"use client";
-import React, { useEffect, useRef } from "react";
-import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-import { useAppSelector } from "@/state/redux";
-import { useGetPropertiesQuery } from "@/state/api";
-import { Property } from "@/types/prismaTypes";
+'use client';
+import React, { useEffect, useRef } from 'react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { useAppSelector } from '@/state/redux';
+import { useGetPropertiesQuery } from '@/state/api';
+import { Property } from '@/types/prismaTypes';
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string;
 
@@ -22,7 +22,7 @@ const Map = () => {
 
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
-      style: "mapbox://styles/majesticglue/cm6u301pq008b01sl7yk1cnvb",
+      style: 'mapbox://styles/majesticglue/cm6u301pq008b01sl7yk1cnvb',
       center: filters.coordinates || [-74.5, 40],
       zoom: 9,
     });
@@ -31,7 +31,7 @@ const Map = () => {
       const marker = createPropertyMarker(property, map);
       const markerElement = marker.getElement();
       const path = markerElement.querySelector("path[fill='#3FB1CE']");
-      if (path) path.setAttribute("fill", "#000000");
+      if (path) path.setAttribute('fill', '#000000');
     });
 
     const resizeMap = () => {
@@ -51,8 +51,8 @@ const Map = () => {
         className="map-container rounded-xl"
         ref={mapContainerRef}
         style={{
-          height: "100%",
-          width: "100%",
+          height: '100%',
+          width: '100%',
         }}
       />
     </div>
@@ -78,8 +78,8 @@ const createPropertyMarker = (property: Property, map: mapboxgl.Map) => {
             </p>
           </div>
         </div>
-        `
-      )
+        `,
+      ),
     )
     .addTo(map);
   return marker;

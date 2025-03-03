@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import React from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
+import React from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -46,22 +46,22 @@ const DiscoverSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 xl:gap-16 text-center">
           {[
             {
-              imageSrc: "/landing-icon-wand.png",
-              title: "Search for Properties",
+              imageSrc: '/landing-icon-wand.png',
+              title: 'Search for Properties',
               description:
-                "Browse through our extensive collection of rental properties in your desired location.",
+                'Browse through our extensive collection of rental properties in your desired location.',
             },
             {
-              imageSrc: "/landing-icon-calendar.png",
-              title: "Book Your Rental",
+              imageSrc: '/landing-icon-calendar.png',
+              title: 'Book Your Rental',
               description:
                 "Once you've found the perfect rental property, easily book it online with just a few clicks.",
             },
             {
-              imageSrc: "/landing-icon-heart.png",
-              title: "Enjoy your New Home",
+              imageSrc: '/landing-icon-heart.png',
+              title: 'Enjoy your New Home',
               description:
-                "Move into your new rental property and start enjoying your dream home.",
+                'Move into your new rental property and start enjoying your dream home.',
             },
           ].map((card, index) => (
             <motion.div key={index} variants={itemVariants}>
