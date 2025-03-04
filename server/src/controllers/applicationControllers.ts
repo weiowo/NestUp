@@ -1,26 +1,26 @@
-import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { Request, Response } from 'express'
+import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 export const listApplications = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { userId, userType } = req.query;
+    const { userId, userType } = req.query
 
-    let whereClause = {};
+    let whereClause = {}
 
     if (userId && userType) {
-      if (userType === "tenant") {
-        whereClause = { tenantCognitoId: String(userId) };
-      } else if (userType === "manager") {
+      if (userType === 'tenant') {
+        whereClause = { tenantCognitoId: String(userId) }
+      } else if (userType === 'manager') {
         whereClause = {
           property: {
             managerCognitoId: String(userId),
           },
-        };
+        }
       }
     }
 
@@ -35,15 +35,15 @@ export const listApplications = async (
         },
         tenant: true,
       },
-    });
+    })
 
     function calculateNextPaymentDate(startDate: Date): Date {
-      const today = new Date();
-      const nextPaymentDate = new Date(startDate);
+      const today = new Date()
+      const nextPaymentDate = new Date(startDate)
       while (nextPaymentDate <= today) {
-        nextPaymentDate.setMonth(nextPaymentDate.getMonth() + 1);
+        nextPaymentDate.setMonth(nextPaymentDate.getMonth() + 1)
       }
-      return nextPaymentDate;
+      return nextPaymentDate
     }
 
     const formattedApplications = await Promise.all(
@@ -55,8 +55,8 @@ export const listApplications = async (
             },
             propertyId: app.propertyId,
           },
-          orderBy: { startDate: "desc" },
-        });
+          orderBy: { startDate: 'desc' },
+        })
 
         return {
           ...app,
@@ -71,17 +71,17 @@ export const listApplications = async (
                 nextPaymentDate: calculateNextPaymentDate(lease.startDate),
               }
             : null,
-        };
+        }
       })
-    );
+    )
 
-    res.json(formattedApplications);
+    res.json(formattedApplications)
   } catch (error: any) {
     res
       .status(500)
-      .json({ message: `Error retrieving applications: ${error.message}` });
+      .json({ message: `Error retrieving applications: ${error.message}` })
   }
-};
+}
 
 export const createApplication = async (
   req: Request,
@@ -97,16 +97,16 @@ export const createApplication = async (
       email,
       phoneNumber,
       message,
-    } = req.body;
+    } = req.body
 
     const property = await prisma.property.findUnique({
       where: { id: propertyId },
       select: { pricePerMonth: true, securityDeposit: true },
-    });
+    })
 
     if (!property) {
-      res.status(404).json({ message: "Property not found" });
-      return;
+      res.status(404).json({ message: 'Property not found' })
+      return
     }
 
     const newApplication = await prisma.$transaction(async (prisma) => {
@@ -126,7 +126,7 @@ export const createApplication = async (
             connect: { cognitoId: tenantCognitoId },
           },
         },
-      });
+      })
 
       // Then create application with lease connection
       const application = await prisma.application.create({
@@ -152,27 +152,27 @@ export const createApplication = async (
           tenant: true,
           lease: true,
         },
-      });
+      })
 
-      return application;
-    });
+      return application
+    })
 
-    res.status(201).json(newApplication);
+    res.status(201).json(newApplication)
   } catch (error: any) {
     res
       .status(500)
-      .json({ message: `Error creating application: ${error.message}` });
+      .json({ message: `Error creating application: ${error.message}` })
   }
-};
+}
 
 export const updateApplicationStatus = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
-    const { status } = req.body;
-    console.log("status:", status);
+    const { id } = req.params
+    const { status } = req.body
+    console.log('status:', status)
 
     const application = await prisma.application.findUnique({
       where: { id: Number(id) },
@@ -180,14 +180,14 @@ export const updateApplicationStatus = async (
         property: true,
         tenant: true,
       },
-    });
+    })
 
     if (!application) {
-      res.status(404).json({ message: "Application not found." });
-      return;
+      res.status(404).json({ message: 'Application not found.' })
+      return
     }
 
-    if (status === "Approved") {
+    if (status === 'Approved') {
       const newLease = await prisma.lease.create({
         data: {
           startDate: new Date(),
@@ -199,7 +199,7 @@ export const updateApplicationStatus = async (
           propertyId: application.propertyId,
           tenantCognitoId: application.tenantCognitoId,
         },
-      });
+      })
 
       // Update the property to connect the tenant
       await prisma.property.update({
@@ -209,7 +209,7 @@ export const updateApplicationStatus = async (
             connect: { cognitoId: application.tenantCognitoId },
           },
         },
-      });
+      })
 
       // Update the application with the new lease ID
       await prisma.application.update({
@@ -220,13 +220,13 @@ export const updateApplicationStatus = async (
           tenant: true,
           lease: true,
         },
-      });
+      })
     } else {
       // Update the application status (for both "Denied" and other statuses)
       await prisma.application.update({
         where: { id: Number(id) },
         data: { status },
-      });
+      })
     }
 
     // Respond with the updated application details
@@ -237,12 +237,12 @@ export const updateApplicationStatus = async (
         tenant: true,
         lease: true,
       },
-    });
+    })
 
-    res.json(updatedApplication);
+    res.json(updatedApplication)
   } catch (error: any) {
     res
       .status(500)
-      .json({ message: `Error updating application status: ${error.message}` });
+      .json({ message: `Error updating application status: ${error.message}` })
   }
-};
+}

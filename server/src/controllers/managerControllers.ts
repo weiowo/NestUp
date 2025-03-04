@@ -1,37 +1,37 @@
-import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
-import { wktToGeoJSON } from "@terraformer/wkt";
+import { Request, Response } from 'express'
+import { PrismaClient } from '@prisma/client'
+import { wktToGeoJSON } from '@terraformer/wkt'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 export const getManager = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { cognitoId } = req.params;
+    const { cognitoId } = req.params
     const manager = await prisma.manager.findUnique({
       where: { cognitoId },
-    });
+    })
 
     if (manager) {
-      res.json(manager);
+      res.json(manager)
     } else {
-      res.status(404).json({ message: "Manager not found" });
+      res.status(404).json({ message: 'Manager not found' })
     }
   } catch (error: any) {
     res
       .status(500)
-      .json({ message: `Error retrieving manager: ${error.message}` });
+      .json({ message: `Error retrieving manager: ${error.message}` })
   }
-};
+}
 
 export const createManager = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { cognitoId, name, email, phoneNumber } = req.body;
+    const { cognitoId, name, email, phoneNumber } = req.body
 
     const manager = await prisma.manager.create({
       data: {
@@ -40,23 +40,23 @@ export const createManager = async (
         email,
         phoneNumber,
       },
-    });
+    })
 
-    res.status(201).json(manager);
+    res.status(201).json(manager)
   } catch (error: any) {
     res
       .status(500)
-      .json({ message: `Error creating manager: ${error.message}` });
+      .json({ message: `Error creating manager: ${error.message}` })
   }
-};
+}
 
 export const updateManager = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { cognitoId } = req.params;
-    const { name, email, phoneNumber } = req.body;
+    const { cognitoId } = req.params
+    const { name, email, phoneNumber } = req.body
 
     const updateManager = await prisma.manager.update({
       where: { cognitoId },
@@ -65,37 +65,37 @@ export const updateManager = async (
         email,
         phoneNumber,
       },
-    });
+    })
 
-    res.json(updateManager);
+    res.json(updateManager)
   } catch (error: any) {
     res
       .status(500)
-      .json({ message: `Error updating manager: ${error.message}` });
+      .json({ message: `Error updating manager: ${error.message}` })
   }
-};
+}
 
 export const getManagerProperties = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
-    const { cognitoId } = req.params;
+    const { cognitoId } = req.params
     const properties = await prisma.property.findMany({
       where: { managerCognitoId: cognitoId },
       include: {
         location: true,
       },
-    });
+    })
 
     const propertiesWithFormattedLocation = await Promise.all(
       properties.map(async (property) => {
         const coordinates: { coordinates: string }[] =
-          await prisma.$queryRaw`SELECT ST_asText(coordinates) as coordinates from "Location" where id = ${property.location.id}`;
+          await prisma.$queryRaw`SELECT ST_asText(coordinates) as coordinates from "Location" where id = ${property.location.id}`
 
-        const geoJSON: any = wktToGeoJSON(coordinates[0]?.coordinates || "");
-        const longitude = geoJSON.coordinates[0];
-        const latitude = geoJSON.coordinates[1];
+        const geoJSON: any = wktToGeoJSON(coordinates[0]?.coordinates || '')
+        const longitude = geoJSON.coordinates[0]
+        const latitude = geoJSON.coordinates[1]
 
         return {
           ...property,
@@ -106,14 +106,14 @@ export const getManagerProperties = async (
               latitude,
             },
           },
-        };
+        }
       })
-    );
+    )
 
-    res.json(propertiesWithFormattedLocation);
+    res.json(propertiesWithFormattedLocation)
   } catch (err: any) {
     res
       .status(500)
-      .json({ message: `Error retrieving manager properties: ${err.message}` });
+      .json({ message: `Error retrieving manager properties: ${err.message}` })
   }
-};
+}
