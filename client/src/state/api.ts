@@ -48,6 +48,7 @@ export const api = createApi({
               : `/tenants/${user.userId}`;
 
           let userDetailsResponse = await fetchWithBQ(endpoint);
+          console.log("userDetailsResponse", userDetailsResponse)
 
           // if user doesn't exist, create new user
           if (
