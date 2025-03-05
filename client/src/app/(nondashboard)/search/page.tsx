@@ -24,7 +24,7 @@ const SearchPage = () => {
         if (key === 'priceRange' || key === 'squareFeet') {
           acc[key] = value.split(',').map((v) => (v === '' ? null : Number(v)));
         } else if (key === 'coordinates') {
-          acc[key] = value.split(',').map(Number);
+          acc[key] = value.split(',').map(Number) || [];
         } else {
           acc[key] = value === 'any' ? null : value;
         }

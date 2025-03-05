@@ -32,7 +32,7 @@ const HeroSection = () => {
         dispatch(
           setFilters({
             location: trimmedQuery,
-            coordinates: [lat, lng],
+            coordinates:  [lng, lat],
           }),
         );
         const params = new URLSearchParams({
