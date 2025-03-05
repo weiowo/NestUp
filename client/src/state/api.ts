@@ -277,11 +277,20 @@ export const api = createApi({
       query: (propertyId) => `properties/${propertyId}/leases`,
       providesTags: ['Leases'],
       async onQueryStarted(_, { queryFulfilled }) {
-        await withToast(queryFulfilled, {
-          error: 'Failed to fetch property leases.',
-        });
+        try {
+          const response = await queryFulfilled;
+          if (!response?.data) {
+            throw new Error('No lease data returned');
+          }
+        } catch (error) {
+          console.error('Failed to fetch property leases:', error);
+          await withToast(queryFulfilled, {
+            error: 'Failed to fetch property leases.',
+          });
+        }
       },
     }),
+    
 
     getPayments: build.query<Payment[], number>({
       query: (leaseId) => `leases/${leaseId}/payments`,
