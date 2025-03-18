@@ -3,7 +3,7 @@
 import { NAVBAR_HEIGHT } from '@/lib/constants';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { useGetAuthUserQuery } from '@/state/api';
 import { usePathname, useRouter } from 'next/navigation';
@@ -18,11 +18,13 @@ import {
 } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { SidebarTrigger } from './ui/sidebar';
+import { cn } from '@/lib/utils';
 
 const Navbar = () => {
   const { data: authUser } = useGetAuthUserQuery();
   const router = useRouter();
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
 
   const isDashboardPage =
     pathname.includes('/managers') || pathname.includes('/tenants');
@@ -32,37 +34,43 @@ const Navbar = () => {
     window.location.href = '/';
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <div
-      className="fixed top-0 left-0 w-full z-50 shadow-xl"
+      className="fixed top-0 left-0 w-full z-50"
       style={{ height: `${NAVBAR_HEIGHT}px` }}
     >
-      <div className="flex justify-between items-center w-full py-3 px-8 bg-primary-700 text-white">
+      <div
+        className={cn(
+          'flex justify-between items-center w-full py-3 px-8 text-white',
+          scrolled ? 'bg-[#272727] opacity-80 shadow-xl' : 'bg-transparent ',
+        )}
+      >
         <div className="flex items-center gap-4 md:gap-6">
           {isDashboardPage && (
             <div className="md:hidden">
               <SidebarTrigger />
             </div>
           )}
-          <Link
-            href="/"
-            className="cursor-pointer hover:!text-primary-300"
-            scroll={false}
-          >
+          <Link href="/" className="cursor-pointer" scroll={false}>
             <div className="flex items-center gap-3">
               <Image
-                src="/logo.svg"
-                alt="Rentiful Logo"
+                src="/logo.png"
+                alt="NestUp Logo"
                 width={24}
                 height={24}
                 className="w-6 h-6"
               />
-              <div className="text-xl font-bold">
-                RENT
-                <span className="text-secondary-500 font-light hover:!text-primary-300">
-                  IFUL
-                </span>
-              </div>
+              <div className="text-xl font-bold">NestUp</div>
             </div>
           </Link>
           {isDashboardPage && authUser && (
@@ -93,11 +101,6 @@ const Navbar = () => {
             </Button>
           )}
         </div>
-        {!isDashboardPage && (
-          <p className="text-primary-200 hidden md:block">
-            Discover your perfect rental apartment with our advanced search
-          </p>
-        )}
         <div className="flex items-center gap-5">
           {authUser ? (
             <>

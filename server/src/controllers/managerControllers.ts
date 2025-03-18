@@ -32,7 +32,6 @@ export const createManager = async (
 ): Promise<void> => {
   try {
     const { cognitoId, name, email, phoneNumber } = req.body
-
     const manager = await prisma.manager.create({
       data: {
         cognitoId,
