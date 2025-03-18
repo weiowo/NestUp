@@ -32,7 +32,7 @@ const HeroSection = () => {
         dispatch(
           setFilters({
             location: trimmedQuery,
-            coordinates:  [lng, lat],
+            coordinates: [lng, lat],
           }),
         );
         const params = new URLSearchParams({
@@ -50,13 +50,13 @@ const HeroSection = () => {
   return (
     <div className="relative h-screen">
       <Image
-        src="/landing-splash.jpg"
+        src="/living-room-retro.webp"
         alt="Rentiful Rental Platform Hero Section"
         fill
         className="object-cover object-center"
         priority
       />
-      <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -65,11 +65,11 @@ const HeroSection = () => {
       >
         <div className="max-w-4xl mx-auto px-16 sm:px-12">
           <h1 className="text-5xl font-bold text-white mb-4">
-            Start your journey to finding the perfect place to call home
+            Begin Your Path to find the perfect place to call home
           </h1>
           <p className="text-xl text-white mb-8">
-            Explore our wide range of rental properties tailored to fit your
-            lifestyle and needs!
+            Discover a diverse selection of rental properties designed to suit
+            your lifestyle!
           </p>
 
           <div className="flex justify-center">

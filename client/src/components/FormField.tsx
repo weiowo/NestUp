@@ -30,6 +30,7 @@ import 'filepond/dist/filepond.min.css';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import MultipleSelector from './MultiSelector';
 
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
@@ -42,6 +43,7 @@ interface FormFieldProps {
     | 'textarea'
     | 'number'
     | 'select'
+    | 'multi-select'
     | 'switch'
     | 'password'
     | 'file'
@@ -113,6 +115,20 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
               ))}
             </SelectContent>
           </Select>
+        );
+      case 'multi-select':
+        return (
+          <MultipleSelector
+            value={field.value}
+            onChange={field.onChange}
+            defaultOptions={options}
+            placeholder={placeholder}
+            emptyIndicator={
+              <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                no results found.
+              </p>
+            }
+          />
         );
       case 'switch':
         return (
