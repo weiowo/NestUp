@@ -173,6 +173,11 @@ export const getProperty = async (
       const longitude = geoJSON.coordinates[0]
       const latitude = geoJSON.coordinates[1]
 
+      const managerPhoneNumber = await prisma.manager.findUnique({
+        where: { cognitoId: property.managerCognitoId }, // Matching the managerCognitoId from property
+        select: { phoneNumber: true }, // Only select the phoneNumber
+      })
+
       const propertyWithCoordinates = {
         ...property,
         location: {
@@ -182,6 +187,7 @@ export const getProperty = async (
             latitude,
           },
         },
+        managerPhoneNumber: managerPhoneNumber?.phoneNumber || '',
       }
       res.json(propertyWithCoordinates)
     }
