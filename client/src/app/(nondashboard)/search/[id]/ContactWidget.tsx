@@ -4,7 +4,10 @@ import { Phone } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const ContactWidget = ({ onOpenModal }: ContactWidgetProps) => {
+export default function ContactWidget({
+  onOpenModal,
+  phone,
+}: ContactWidgetProps) {
   const { data: authUser } = useGetAuthUserQuery();
   const router = useRouter();
 
@@ -26,7 +29,7 @@ const ContactWidget = ({ onOpenModal }: ContactWidgetProps) => {
         <div>
           <p>Contact This Property</p>
           <div className="text-lg font-bold text-primary-800">
-            (424) 340-5574
+            {phone || 'No phone provided'}
           </div>
         </div>
       </div>
@@ -36,16 +39,12 @@ const ContactWidget = ({ onOpenModal }: ContactWidgetProps) => {
       >
         {authUser ? 'Submit Application' : 'Sign In to Apply'}
       </Button>
-
       <hr className="my-4" />
       <div className="text-sm">
-        <div className="text-primary-600 mb-1">Language: English, Bahasa.</div>
         <div className="text-primary-600">
           Open by appointment on Monday - Sunday
         </div>
       </div>
     </div>
   );
-};
-
-export default ContactWidget;
+}

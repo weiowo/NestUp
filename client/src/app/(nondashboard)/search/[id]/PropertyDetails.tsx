@@ -5,15 +5,19 @@ import { useGetPropertyQuery } from '@/state/api';
 import { HelpCircle } from 'lucide-react';
 import React from 'react';
 
-const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
-  const {
-    data: property,
-    isError,
-    isLoading,
-  } = useGetPropertyQuery(propertyId);
+interface PropertyDetailsProps {
+  property: Property;
+}
 
-  if (isLoading) return <>Loading...</>;
-  if (isError || !property) {
+export default function PropertyDetails({ property }: PropertyDetailsProps) {
+  // const {
+  //   data: property,
+  //   isError,
+  //   isLoading,
+  // } = useGetPropertyQuery(propertyId);
+
+  // if (isLoading) return <>Loading...</>;
+  if (!property) {
     return <>Property not Found</>;
   }
 
@@ -23,7 +27,7 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
       <div>
         <h2 className="text-xl font-semibold my-3">Property Amenities</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {property.amenities.map((amenity: AmenityEnum) => {
+          {property.amenities.map((amenity: string) => {
             const Icon = AmenityIcons[amenity as AmenityEnum] || HelpCircle;
             return (
               <div
@@ -46,7 +50,7 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
           Highlights
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4 w-full">
-          {property.highlights.map((highlight: HighlightEnum) => {
+          {property.highlights.map((highlight: string) => {
             const Icon =
               HighlightIcons[highlight as HighlightEnum] || HelpCircle;
             return (
@@ -116,6 +120,4 @@ const PropertyDetails = ({ propertyId }: PropertyDetailsProps) => {
       </div>
     </div>
   );
-};
-
-export default PropertyDetails;
+}

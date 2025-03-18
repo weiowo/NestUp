@@ -18,8 +18,8 @@ export default function NewProperty() {
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
-      name: 'test',
-      description: 'test',
+      name: '',
+      description: '',
       pricePerMonth: 1000,
       securityDeposit: 500,
       applicationFee: 100,
@@ -27,15 +27,15 @@ export default function NewProperty() {
       isParkingIncluded: true,
       photoUrls: [],
       amenities: [],
-      highlights: '',
+      highlights: [],
       beds: 1,
       baths: 1,
       squareFeet: 1000,
-      address: 'test',
-      city: 'test',
-      state: 'test',
-      country: 'test',
-      postalCode: 'test',
+      address: '',
+      city: '',
+      state: '',
+      country: '',
+      postalCode: '',
     },
   });
 
@@ -63,9 +63,13 @@ export default function NewProperty() {
         formData.append(key, String(value));
       }
     });
-
     formData.append('managerCognitoId', authUser.cognitoInfo.userId);
-    await createProperty(formData);
+    try {
+      await createProperty(formData);
+      form.reset();
+    } catch (error) {
+      console.error('Error creating property:', error);
+    }
   };
 
   return (
@@ -80,7 +84,6 @@ export default function NewProperty() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="p-4 space-y-10"
           >
-            {/* Basic Information */}
             <div>
               <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
               <div className="space-y-4">
@@ -92,10 +95,7 @@ export default function NewProperty() {
                 />
               </div>
             </div>
-
             <hr className="my-6 border-gray-200" />
-
-            {/* Fees */}
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">Fees</h2>
               <CustomFormField
@@ -116,10 +116,7 @@ export default function NewProperty() {
                 />
               </div>
             </div>
-
             <hr className="my-6 border-gray-200" />
-
-            {/* Property Details */}
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">Property Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

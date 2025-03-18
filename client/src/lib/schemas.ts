@@ -20,7 +20,14 @@ export const propertySchema = z.object({
       }),
     )
     .min(1, 'At least one amenity is required'),
-  highlights: z.string().min(1, 'Highlights are required'),
+  highlights: z
+    .array(
+      z.object({
+        value: z.string().min(1, 'Value is required'),
+        label: z.string().min(1, 'Label is required'),
+      }),
+    )
+    .min(1, 'At least one highlight is required'),
   beds: z.coerce.number().positive().min(0).max(10).int(),
   baths: z.coerce.number().positive().min(0).max(10).int(),
   squareFeet: z.coerce.number().int().positive(),

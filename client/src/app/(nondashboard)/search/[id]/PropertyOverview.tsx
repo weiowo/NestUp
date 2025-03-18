@@ -1,19 +1,17 @@
-import { useGetPropertyQuery } from '@/state/api';
 import { MapPin, Star } from 'lucide-react';
 import React from 'react';
+import { Heart } from 'lucide-react';
+interface PropertyOverviewProps {
+  property: Property;
+  onFavoriteToggle: () => void;
+  isFavorite: boolean;
+}
 
-const PropertyOverview = ({ propertyId }: PropertyOverviewProps) => {
-  const {
-    data: property,
-    isError,
-    isLoading,
-  } = useGetPropertyQuery(propertyId);
-
-  if (isLoading) return <>Loading...</>;
-  if (isError || !property) {
-    return <>Property not Found</>;
-  }
-
+const PropertyOverview = ({
+  property,
+  onFavoriteToggle,
+  isFavorite,
+}: PropertyOverviewProps) => {
   return (
     <div>
       {/* Header */}
@@ -24,7 +22,19 @@ const PropertyOverview = ({ propertyId }: PropertyOverviewProps) => {
             {property.location?.city}
           </span>
         </div>
-        <h1 className="text-3xl font-bold my-5">{property.name}</h1>
+        <div className="flex justify-between">
+          <h1 className="text-3xl font-bold my-5">{property.name}</h1>
+          <button
+            className="bg-white rounded-full p-1"
+            onClick={onFavoriteToggle}
+          >
+            <Heart
+              className={`w-6 h-6 ${
+                isFavorite ? 'text-red-500 fill-red-500' : 'text-gray-600'
+              }`}
+            />
+          </button>
+        </div>
         <div className="flex justify-between items-center">
           <span className="flex items-center text-gray-500">
             <MapPin className="w-4 h-4 mr-1 text-gray-700" />

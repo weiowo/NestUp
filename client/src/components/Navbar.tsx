@@ -65,12 +65,12 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
               <Image
                 src="/logo.png"
-                alt="NestUp Logo"
+                alt="NestUP Logo"
                 width={24}
                 height={24}
                 className="w-6 h-6"
               />
-              <div className="text-xl font-bold">NestUp</div>
+              <div className="text-xl font-bold">NestUP</div>
             </div>
           </Link>
           {isDashboardPage && authUser && (

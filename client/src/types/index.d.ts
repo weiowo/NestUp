@@ -71,6 +71,7 @@ declare global {
 
   interface ContactWidgetProps {
     onOpenModal: () => void;
+    phone: string;
   }
 
   interface ImagePreviewsProps {
@@ -134,6 +135,41 @@ declare global {
     cognitoInfo: AuthUser;
     userInfo: Tenant | Manager;
     userRole: JsonObject | JsonPrimitive | JsonArray;
+  }
+
+  interface Property {
+    id: number;
+    name: string;
+    description: string;
+    pricePerMonth: number;
+    securityDeposit: number;
+    applicationFee: number;
+    photoUrls: string[];
+    amenities: string[];
+    highlights: string[];
+    isPetsAllowed: boolean;
+    isParkingIncluded: boolean;
+    beds: number;
+    baths: number;
+    squareFeet: number;
+    propertyType: string;
+    postedDate: string;
+    averageRating: number;
+    numberOfReviews: number;
+    locationId: number;
+    managerCognitoId: string;
+    location: {
+      id: number;
+      address: string;
+      city: string;
+      state: string;
+      country: string;
+      postalCode: string;
+      coordinates: {
+        longitude: number;
+        latitude: number;
+      };
+    };
   }
 }
 

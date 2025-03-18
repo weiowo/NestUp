@@ -4,8 +4,9 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-const ImagePreviews = ({ images }: ImagePreviewsProps) => {
+export default function ImagePreviews({ images }: ImagePreviewsProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  console.log('images', images);
 
   const handlePrev = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -49,6 +50,4 @@ const ImagePreviews = ({ images }: ImagePreviewsProps) => {
       </button>
     </div>
   );
-};
-
-export default ImagePreviews;
+}

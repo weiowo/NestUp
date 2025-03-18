@@ -11,7 +11,7 @@ import Card from '@/components/Card';
 import React from 'react';
 import CardCompact from '@/components/CardCompact';
 
-const Listings = () => {
+export default function Listings() {
   const { data: authUser } = useGetAuthUserQuery();
   const { data: tenant } = useGetTenantQuery(
     authUser?.cognitoInfo?.userId || '',
@@ -63,7 +63,7 @@ const Listings = () => {
       </h3>
       <div className="flex">
         <div className="p-4 w-full">
-          {properties?.map((property) =>
+          {properties?.map((property: Property) =>
             viewMode === 'grid' ? (
               <Card
                 key={property.id}
@@ -96,6 +96,4 @@ const Listings = () => {
       </div>
     </div>
   );
-};
-
-export default Listings;
+}

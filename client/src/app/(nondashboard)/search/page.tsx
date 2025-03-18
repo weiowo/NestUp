@@ -11,7 +11,7 @@ import { setFilters } from '@/state';
 import Map from './Map';
 import Listings from './Listings';
 
-const SearchPage = () => {
+export default function SearchPage() {
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const isFiltersFullOpen = useAppSelector(
@@ -28,7 +28,6 @@ const SearchPage = () => {
         } else {
           acc[key] = value === 'any' ? null : value;
         }
-
         return acc;
       },
       {},
@@ -63,6 +62,4 @@ const SearchPage = () => {
       </div>
     </div>
   );
-};
-
-export default SearchPage;
+}

@@ -1,6 +1,12 @@
 'use client';
 
-import { useGetAuthUserQuery } from '@/state/api';
+import {
+  useGetAuthUserQuery,
+  useGetPropertyQuery,
+  useGetTenantQuery,
+  useRemoveFavoritePropertyMutation,
+  useAddFavoritePropertyMutation,
+} from '@/state/api';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react';
 import ImagePreviews from './ImagePreviews';
@@ -10,26 +16,70 @@ import PropertyLocation from './PropertyLocation';
 import ContactWidget from './ContactWidget';
 import ApplicationModal from './ApplicationModal';
 
-const SingleListing = () => {
+export default function SingleListing() {
   const { id } = useParams();
   const propertyId = Number(id);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: authUser } = useGetAuthUserQuery();
+  const { data: tenant } = useGetTenantQuery(
+    authUser?.cognitoInfo?.userId || '',
+    {
+      skip: !authUser?.cognitoInfo?.userId,
+    },
+  );
+
+  const {
+    data: property,
+    isError,
+    isLoading,
+  } = useGetPropertyQuery(propertyId);
+  const [addFavorite] = useAddFavoritePropertyMutation();
+  const [removeFavorite] = useRemoveFavoritePropertyMutation();
+  console.log('data in page', property);
+
+  if (isLoading) return <>Loading...yaya</>;
+  if (isError || !property) {
+    return <>Property not Found</>;
+  }
+
+  const isFavorite = tenant?.favorites?.some(
+    (fav: Property) => fav.id === propertyId,
+  );
+
+  const handleFavoriteToggle = async () => {
+    if (!authUser) return;
+    if (isFavorite) {
+      await removeFavorite({
+        cognitoId: authUser.cognitoInfo.userId,
+        propertyId,
+      });
+    } else {
+      await addFavorite({
+        cognitoId: authUser.cognitoInfo.userId,
+        propertyId,
+      });
+    }
+  };
 
   return (
     <div>
-      <ImagePreviews
-        images={['/singlelisting-2.jpg', '/singlelisting-3.jpg']}
-      />
+      <ImagePreviews images={property.photoUrls || []} />
       <div className="flex flex-col md:flex-row justify-center gap-10 mx-10 md:w-2/3 md:mx-auto mt-16 mb-8">
         <div className="order-2 md:order-1">
-          <PropertyOverview propertyId={propertyId} />
-          <PropertyDetails propertyId={propertyId} />
-          <PropertyLocation propertyId={propertyId} />
+          <PropertyOverview
+            isFavorite={isFavorite}
+            onFavoriteToggle={handleFavoriteToggle}
+            property={property}
+          />
+          <PropertyDetails property={property} />
+          <PropertyLocation property={property} />
         </div>
 
         <div className="order-1 md:order-2">
-          <ContactWidget onOpenModal={() => setIsModalOpen(true)} />
+          <ContactWidget
+            phone={property.managerPhoneNumber}
+            onOpenModal={() => setIsModalOpen(true)}
+          />
         </div>
       </div>
 
@@ -42,6 +92,4 @@ const SingleListing = () => {
       )}
     </div>
   );
-};
-
-export default SingleListing;
+}
