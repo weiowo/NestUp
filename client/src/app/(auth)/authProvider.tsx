@@ -29,10 +29,7 @@ const components = {
     return (
       <View className="mt-4 mb-7">
         <Heading level={3} className="!text-2xl !font-bold">
-          RENT
-          <span className="text-secondary-500 font-light hover:!text-primary-300">
-            IFUL
-          </span>
+          NestUp
         </Heading>
         <p className="text-muted-foreground mt-2">
           <span className="font-bold">Welcome!</span> Please sign in to continue
@@ -71,9 +68,14 @@ const components = {
             errorMessage={validationErrors?.['custom:role']}
             hasError={!!validationErrors?.['custom:role']}
             isRequired
+            className="cursor-pointer"
           >
-            <Radio value="tenant">Tenant</Radio>
-            <Radio value="manager">Manager</Radio>
+            <Radio className="cursor-pointer" value="tenant">
+              Tenant
+            </Radio>
+            <Radio className="cursor-pointer" value="manager">
+              Manager
+            </Radio>
           </RadioGroupField>
         </>
       );

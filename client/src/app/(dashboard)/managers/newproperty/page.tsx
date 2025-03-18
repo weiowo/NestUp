@@ -11,31 +11,31 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 
-const NewProperty = () => {
+export default function NewProperty() {
   const [createProperty] = useCreatePropertyMutation();
   const { data: authUser } = useGetAuthUserQuery();
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
-      name: '',
-      description: '',
+      name: 'test',
+      description: 'test',
       pricePerMonth: 1000,
       securityDeposit: 500,
       applicationFee: 100,
       isPetsAllowed: true,
       isParkingIncluded: true,
       photoUrls: [],
-      amenities: '',
+      amenities: [],
       highlights: '',
       beds: 1,
       baths: 1,
       squareFeet: 1000,
-      address: '',
-      city: '',
-      state: '',
-      country: '',
-      postalCode: '',
+      address: 'test',
+      city: 'test',
+      state: 'test',
+      country: 'test',
+      postalCode: 'test',
     },
   });
 
@@ -43,7 +43,6 @@ const NewProperty = () => {
     if (!authUser?.cognitoInfo?.userId) {
       throw new Error('No manager ID found');
     }
-
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (key === 'photoUrls') {
@@ -52,14 +51,20 @@ const NewProperty = () => {
           formData.append('photos', file);
         });
       } else if (Array.isArray(value)) {
-        formData.append(key, JSON.stringify(value));
+        if (value[0] && 'value' in value[0] && !(value[0] instanceof File)) {
+          const stringFromArray = value
+            .map((item) => ('value' in item ? item.value : item))
+            .join(',');
+          formData.append(key, stringFromArray);
+        } else {
+          formData.append(key, JSON.stringify(value));
+        }
       } else {
         formData.append(key, String(value));
       }
     });
 
     formData.append('managerCognitoId', authUser.cognitoInfo.userId);
-
     await createProperty(formData);
   };
 
@@ -170,7 +175,7 @@ const NewProperty = () => {
                 <CustomFormField
                   name="amenities"
                   label="Amenities"
-                  type="select"
+                  type="multi-select"
                   options={Object.keys(AmenityEnum).map((amenity) => ({
                     value: amenity,
                     label: amenity,
@@ -179,7 +184,7 @@ const NewProperty = () => {
                 <CustomFormField
                   name="highlights"
                   label="Highlights"
-                  type="select"
+                  type="multi-select"
                   options={Object.keys(HighlightEnum).map((highlight) => ({
                     value: highlight,
                     label: highlight,
@@ -187,10 +192,7 @@ const NewProperty = () => {
                 />
               </div>
             </div>
-
             <hr className="my-6 border-gray-200" />
-
-            {/* Photos */}
             <div>
               <h2 className="text-lg font-semibold mb-4">Photos</h2>
               <CustomFormField
@@ -200,10 +202,7 @@ const NewProperty = () => {
                 accept="image/*"
               />
             </div>
-
             <hr className="my-6 border-gray-200" />
-
-            {/* Additional Information */}
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">
                 Additional Information
@@ -236,6 +235,4 @@ const NewProperty = () => {
       </div>
     </div>
   );
-};
-
-export default NewProperty;
+}
