@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import React from 'react';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 
 const CallToActionSection = () => {
   return (
@@ -38,15 +37,8 @@ const CallToActionSection = () => {
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="inline-block text-primary-700 bg-white rounded-lg px-6 py-3 font-semibold hover:bg-primary-500 hover:text-primary-50"
               >
-                Search
+                Start Now
               </button>
-              <Link
-                href="/signup"
-                className="inline-block text-white bg-secondary-600 rounded-lg px-6 py-3 font-semibold hover:bg-secondary-500"
-                scroll={false}
-              >
-                Sign Up
-              </Link>
             </div>
           </div>
         </div>

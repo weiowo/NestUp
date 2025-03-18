@@ -22,9 +22,11 @@ const Map = () => {
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
       style: 'mapbox://styles/weiowo/cm7ty5bi500a801sif1lt65ug',
-      center: filters.coordinates || [-74.5, 40],
-      zoom: 9,
+      center: filters.coordinates || [125, 21],
+      zoom: 12,
     });
+
+    console.log('filters', filters);
 
     properties.forEach((property) => {
       const marker = createPropertyMarker(property, map);

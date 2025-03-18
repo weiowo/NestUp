@@ -7,6 +7,7 @@ import React from 'react';
 export default function ContactWidget({
   onOpenModal,
   phone,
+  name,
 }: ContactWidgetProps) {
   const { data: authUser } = useGetAuthUserQuery();
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function ContactWidget({
         </div>
         <div>
           <p>Contact This Property</p>
+          <p>{name || ''}</p>
           <div className="text-lg font-bold text-primary-800">
             {phone || 'No phone provided'}
           </div>

@@ -15,7 +15,10 @@ const Card = ({
   );
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg w-full mb-5">
+    <Link
+      href={propertyLink || '/'}
+      className="cursor-pointer bg-white rounded-xl overflow-hidden shadow-lg w-full mb-5"
+    >
       <div className="relative">
         <div className="w-full h-48 relative">
           <Image
@@ -53,19 +56,7 @@ const Card = ({
         )}
       </div>
       <div className="p-4">
-        <h2 className="text-xl font-bold mb-1">
-          {propertyLink ? (
-            <Link
-              href={propertyLink}
-              className="hover:underline hover:text-blue-600"
-              scroll={false}
-            >
-              {property.name}
-            </Link>
-          ) : (
-            property.name
-          )}
-        </h2>
+        <h2 className="text-xl font-bold mb-1">{property.name}</h2>
         <p className="text-gray-600 mb-2">
           {property?.location?.address}, {property?.location?.city}
         </p>
@@ -100,7 +91,7 @@ const Card = ({
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -11,6 +11,8 @@ const ApplicationCard = ({
     application.property.photoUrls?.[0] || '/placeholder.jpg',
   );
 
+  console.log('application', application);
+
   const statusColor =
     application.status === 'Approved'
       ? 'bg-green-500'

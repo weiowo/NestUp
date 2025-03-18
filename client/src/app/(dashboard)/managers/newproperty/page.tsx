@@ -67,6 +67,12 @@ export default function NewProperty() {
     try {
       await createProperty(formData);
       form.reset();
+      const fileInput = document.querySelector<HTMLInputElement>(
+        'input[type="file"][name="photoUrls"]',
+      );
+      if (fileInput) {
+        fileInput.value = '';
+      }
     } catch (error) {
       console.error('Error creating property:', error);
     }

@@ -77,6 +77,7 @@ export default function SingleListing() {
 
         <div className="order-1 md:order-2">
           <ContactWidget
+            name={property.managerName}
             phone={property.managerPhoneNumber}
             onOpenModal={() => setIsModalOpen(true)}
           />

@@ -10,7 +10,7 @@ import {
 } from '@/state/api';
 import React from 'react';
 
-const Favorites = () => {
+export default function Favorites() {
   const { data: authUser } = useGetAuthUserQuery();
   const { data: tenant } = useGetTenantQuery(
     authUser?.cognitoInfo?.userId || '',
@@ -45,7 +45,7 @@ const Favorites = () => {
             isFavorite={true}
             onFavoriteToggle={() => {}}
             showFavoriteButton={false}
-            propertyLink={`/tenants/residences/${property.id}`}
+            propertyLink={`/search/${property.id}`}
           />
         ))}
       </div>
@@ -54,6 +54,4 @@ const Favorites = () => {
       )}
     </div>
   );
-};
-
-export default Favorites;
+}
