@@ -9,40 +9,6 @@ datasource db {
   extensions = [postgis]
 }
 
-enum Highlight {
-  HighSpeedInternetAccess
-  WasherDryer
-  AirConditioning
-  Heating
-  SmokeFree
-  CableReady
-  SatelliteTV
-  DoubleVanities
-  TubShower
-  Intercom
-  SprinklerSystem
-  RecentlyRenovated
-  CloseToTransit
-  GreatView
-  QuietNeighborhood
-}
-
-enum Amenity {
-  WasherDryer
-  AirConditioning
-  Dishwasher
-  HighSpeedInternet
-  HardwoodFloors
-  WalkInClosets
-  Microwave
-  Refrigerator
-  Pool
-  Gym
-  Parking
-  PetsAllowed
-  WiFi
-}
-
 enum PropertyType {
   Rooms
   Tinyhouse
@@ -73,8 +39,8 @@ model Property {
   securityDeposit   Float
   applicationFee    Float
   photoUrls         String[]
-  amenities         Amenity[]
-  highlights        Highlight[]
+  amenities         String[]
+  highlights        String[]
   isPetsAllowed     Boolean      @default(false)
   isParkingIncluded Boolean      @default(false)
   beds              Int

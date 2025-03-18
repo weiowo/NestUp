@@ -55,6 +55,8 @@ export const api = createApi({
             userDetailsResponse.error &&
             userDetailsResponse.error.status === 404
           ) {
+            console.log('here in api.ts', user);
+
             userDetailsResponse = await createNewUserInDatabase(
               user,
               idToken,
@@ -290,7 +292,6 @@ export const api = createApi({
         }
       },
     }),
-    
 
     getPayments: build.query<Payment[], number>({
       query: (leaseId) => `leases/${leaseId}/payments`,

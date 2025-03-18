@@ -12,7 +12,14 @@ export const propertySchema = z.object({
   photoUrls: z
     .array(z.instanceof(File))
     .min(1, 'At least one photo is required'),
-  amenities: z.string().min(1, 'Amenities are required'),
+  amenities: z
+    .array(
+      z.object({
+        value: z.string().min(1, 'Value is required'),
+        label: z.string().min(1, 'Label is required'),
+      }),
+    )
+    .min(1, 'At least one amenity is required'),
   highlights: z.string().min(1, 'Highlights are required'),
   beds: z.coerce.number().positive().min(0).max(10).int(),
   baths: z.coerce.number().positive().min(0).max(10).int(),

@@ -5,6 +5,8 @@ import { S3Client } from '@aws-sdk/client-s3'
 import { Location } from '@prisma/client'
 import { Upload } from '@aws-sdk/lib-storage'
 import axios from 'axios'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const prisma = new PrismaClient()
 
@@ -14,7 +16,7 @@ const s3Client = new S3Client({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
   },
-});
+})
 
 export const getProperties = async (
   req: Request,
@@ -205,7 +207,6 @@ export const createProperty = async (
       managerCognitoId,
       ...propertyData
     } = req.body
-
     const photoUrls = await Promise.all(
       files.map(async (file) => {
         const uploadParams = {
@@ -223,7 +224,6 @@ export const createProperty = async (
         return uploadResult.Location
       })
     )
-
     const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams(
       {
         street: address,
