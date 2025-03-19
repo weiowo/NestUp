@@ -35,7 +35,6 @@ export default function SingleListing() {
   } = useGetPropertyQuery(propertyId);
   const [addFavorite] = useAddFavoritePropertyMutation();
   const [removeFavorite] = useRemoveFavoritePropertyMutation();
-  console.log('data in page', property);
 
   if (isLoading) return <>Loading...</>;
   if (isError || !property) {

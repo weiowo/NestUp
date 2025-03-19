@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const containerVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -22,7 +21,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const FeaturesSection = () => {
+export default function FeaturesSection() {
   return (
     <motion.div
       initial="hidden"
@@ -57,8 +56,6 @@ const FeaturesSection = () => {
                     'Find trustworthy and verified rental listings to ensure a hassle-free experience.',
                   ][index]
                 }
-                linkText={['Explore', 'Search', 'Discover'][index]}
-                linkHref={['/explore', '/search', '/discover'][index]}
               />
             </motion.div>
           ))}
@@ -66,20 +63,20 @@ const FeaturesSection = () => {
       </div>
     </motion.div>
   );
-};
+}
 
 const FeatureCard = ({
   imageSrc,
   title,
   description,
-  linkText,
-  linkHref,
+  // linkText,
+  // linkHref,
 }: {
   imageSrc: string;
   title: string;
   description: string;
-  linkText: string;
-  linkHref: string;
+  // linkText?: string;
+  // linkHref?: string;
 }) => (
   <div className="text-center">
     <div className="p-4 rounded-lg mb-4 flex items-center justify-center h-48">
@@ -93,14 +90,12 @@ const FeatureCard = ({
     </div>
     <h3 className="text-xl font-semibold mb-2">{title}</h3>
     <p className="mb-4">{description}</p>
-    <Link
+    {/* <Link
       href={linkHref}
       className="inline-block border border-gray-300 rounded px-4 py-2 hover:bg-gray-100"
       scroll={false}
     >
       {linkText}
-    </Link>
+    </Link> */}
   </div>
 );
-
-export default FeaturesSection;
