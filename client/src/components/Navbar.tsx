@@ -25,7 +25,6 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  console.log('test', authUser?.userInfo, authUser?.userRole);
 
   const isDashboardPage =
     pathname.includes('/managers') || pathname.includes('/tenants');

@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 
 export default function ImagePreviews({ images }: ImagePreviewsProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  console.log('images', images);
 
   const handlePrev = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
