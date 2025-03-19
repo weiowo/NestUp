@@ -29,6 +29,9 @@ export default function ImagePreviews({ images }: ImagePreviewsProps) {
             alt={`Property Image ${index + 1}`}
             fill
             priority={index == 0}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = '/landing-call-to-action.jpg';
+            }}
             className="object-cover cursor-pointer transition-transform duration-500 ease-in-out"
           />
         </div>
