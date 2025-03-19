@@ -15,6 +15,7 @@ import PropertyDetails from './PropertyDetails';
 import PropertyLocation from './PropertyLocation';
 import ContactWidget from './ContactWidget';
 import ApplicationModal from './ApplicationModal';
+import { useRouter } from 'next/navigation';
 
 export default function SingleListing() {
   const { id } = useParams();
@@ -35,6 +36,7 @@ export default function SingleListing() {
   } = useGetPropertyQuery(propertyId);
   const [addFavorite] = useAddFavoritePropertyMutation();
   const [removeFavorite] = useRemoveFavoritePropertyMutation();
+  const router = useRouter();
 
   if (isLoading) return <>Loading...</>;
   if (isError || !property) {
@@ -46,15 +48,18 @@ export default function SingleListing() {
   );
 
   const handleFavoriteToggle = async () => {
-    if (!authUser) return;
+    if (!authUser) {
+      router.push('/signup');
+      return;
+    }
     if (isFavorite) {
       await removeFavorite({
-        cognitoId: authUser.cognitoInfo.userId,
+        cognitoId: authUser?.cognitoInfo.userId || '',
         propertyId,
       });
     } else {
       await addFavorite({
-        cognitoId: authUser.cognitoInfo.userId,
+        cognitoId: authUser?.cognitoInfo.userId || '',
         propertyId,
       });
     }

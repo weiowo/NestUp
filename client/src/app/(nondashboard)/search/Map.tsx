@@ -23,7 +23,7 @@ const Map = () => {
       container: mapContainerRef.current!,
       style: 'mapbox://styles/weiowo/cm7ty5bi500a801sif1lt65ug',
       center: filters.coordinates || [125, 21],
-      zoom: 12,
+      zoom: 9,
     });
 
     properties.forEach((property) => {
