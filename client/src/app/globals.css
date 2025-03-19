@@ -190,6 +190,7 @@ body,
   border-radius: var(--radius);
   padding: 2rem !important;
   border: 1px solid hsl(var(--border));
+  background-color: white;
 }
 
 [data-amplify-authenticator] [data-amplify-form] {

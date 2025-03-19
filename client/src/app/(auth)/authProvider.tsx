@@ -141,7 +141,7 @@ const formFields = {
   },
 };
 
-const Auth = ({ children }: { children: React.ReactNode }) => {
+const Auth = ({ children }: { children?: React.ReactNode }) => {
   const { user } = useAuthenticator((context) => [context.user]);
   const router = useRouter();
   const pathname = usePathname();
@@ -163,14 +163,16 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <div className="h-full">
-      <Authenticator
-        initialState={pathname.includes('signup') ? 'signUp' : 'signIn'}
-        components={components}
-        formFields={formFields}
-      >
-        {() => <>{children}</>}
-      </Authenticator>
+    <div className="w-full h-full bg-[url('/living-room-retro.webp')] bg-cover bg-center bg-black bg-opacity-30 bg-blend-darken">
+      <div className="h-full z-10">
+        <Authenticator
+          initialState={pathname.includes('signup') ? 'signUp' : 'signIn'}
+          components={components}
+          formFields={formFields}
+        >
+          {() => <>{children}</>}
+        </Authenticator>
+      </div>
     </div>
   );
 };
