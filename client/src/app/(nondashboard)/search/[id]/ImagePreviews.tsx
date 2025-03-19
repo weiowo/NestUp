@@ -25,7 +25,7 @@ export default function ImagePreviews({ images }: ImagePreviewsProps) {
           }`}
         >
           <Image
-            src={image}
+            src={image || '/landing-call-to-action.jpg'}
             alt={`Property Image ${index + 1}`}
             fill
             priority={index == 0}
