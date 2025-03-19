@@ -8,7 +8,7 @@ import { Button } from './ui/button';
 import { useGetAuthUserQuery } from '@/state/api';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'aws-amplify/auth';
-import { Bell, MessageCircle, Plus, Search } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +25,7 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  console.log('test', authUser?.userInfo, authUser?.userRole);
 
   const isDashboardPage =
     pathname.includes('/managers') || pathname.includes('/tenants');
@@ -52,7 +53,11 @@ const Navbar = () => {
       <div
         className={cn(
           'flex justify-between items-center w-full py-3 px-8 text-white',
-          scrolled ? 'bg-[#272727] opacity-80 shadow-xl' : 'bg-transparent ',
+          pathname === '/' && scrolled
+            ? 'bg-[#272727] opacity-80 shadow-xl'
+            : pathname === '/'
+              ? 'bg-transparent'
+              : 'bg-[#454545] shadow-xl',
         )}
       >
         <div className="flex items-center gap-4 md:gap-6">
@@ -104,14 +109,15 @@ const Navbar = () => {
         <div className="flex items-center gap-5">
           {authUser ? (
             <>
-              <div className="relative hidden md:block">
+              {/* <div className="relative hidden md:block">
                 <MessageCircle className="w-6 h-6 cursor-pointer text-primary-200 hover:text-primary-400" />
                 <span className="absolute top-0 right-0 w-2 h-2 bg-secondary-700 rounded-full"></span>
               </div>
               <div className="relative hidden md:block">
                 <Bell className="w-6 h-6 cursor-pointer text-primary-200 hover:text-primary-400" />
                 <span className="absolute top-0 right-0 w-2 h-2 bg-secondary-700 rounded-full"></span>
-              </div>
+              </div> */}
+              <Link href="/search">Properties</Link>
 
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-2 focus:outline-none">
