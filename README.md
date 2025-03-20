@@ -3,7 +3,7 @@
 
 > #### Begin Your Path to find the perfect place to call home           
 >
-> <img align="center" width="20px" src="./readme_assets/house.png"/>  Fun fact: `"NestUP"` is also a play "Next Stop!".
+> <img align="center" width="20px" src="./readme_assets/house.png"/>  Fun fact: `"NestUP"` is also a play of "Next Stop!".
 
 - [NestUp ](#nestup-)
   - [Developed with  and](#developed-with--and)
