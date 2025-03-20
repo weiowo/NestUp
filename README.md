@@ -1,9 +1,9 @@
-# NestUp <img align="center" width="35px" src="./readme_assets/house.png"/>
+# NestUp <img align="center" width="30px" src="./readme_assets/house.png"/>
 
 
 > #### Begin Your Path to find the perfect place to call home           
 >
-> <img align="center" width="25px" src="./readme_assets/house.png"/>  Fun fact: `"NestUP"` is also a play "Next Stop!".
+> <img align="center" width="20px" src="./readme_assets/house.png"/>  Fun fact: `"NestUP"` is also a play "Next Stop!".
 
 - [NestUp ](#nestup-)
   - [Developed with  and](#developed-with--and)
@@ -52,7 +52,7 @@
 - Clean and intuitive UI with smooth animations for a seamless experience.
 <br/>
 
-![Website Overview](https://ik.imagekit.io/blogwanderword/overview.gif?updatedAt=1742439106858)
+![Website Overview](https://ik.imagekit.io/blogwanderword/overview.gif?updatedAt=1742439882407)
 
 #### `SignUp and SignIn function`
 - Users can sign up and sign in, choosing to register as a manager or tenant.
@@ -66,13 +66,13 @@
 - Manage property listings with detailed descriptions and images.
 <br/>
 
-![Manage property listings](https://ik.imagekit.io/blogwanderword/property-list.gif?updatedAt=1742439331235)
+![Manage property listings](https://ik.imagekit.io/blogwanderword/property-list.gif?updatedAt=1742440153872)
 
 #### `Add new property`
 - Easily add a property with multiple options and upload images.
 <br/>
 
-![Manage property listings](https://ik.imagekit.io/blogwanderword/add-property.gif?updatedAt=1742439304787)
+![Add new property](https://ik.imagekit.io/blogwanderword/add-property.gif?updatedAt=1742440139364)
 
 #### `Check on applications & Tenant management`
 - Approve or reject tenant applications.
@@ -102,10 +102,10 @@ Find and explore available properties with filters for price, location, and amen
 - Track application status in real-time.
 <br/>
 
-![Track application status](https://ik.imagekit.io/blogwanderword/track-application-status.gif?updatedAt=1742439108094))
+![Track application status](https://ik.imagekit.io/blogwanderword/track-application-status.gif?updatedAt=1742439108094)
 
 #### `Check property detail and save favorite`
-Click the heart icon to save favorite listings and revisit them later.
+- Click the heart icon to save favorite listings and revisit them later.
 <br/>
 
 ![Save favorite properties](https://ik.imagekit.io/blogwanderword/add-favorite.gif?updatedAt=1742438924389)
