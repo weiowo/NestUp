@@ -111,7 +111,7 @@ Find and explore available properties with filters for price, location, and amen
 ![Save favorite properties](https://ik.imagekit.io/blogwanderword/add-favorite.gif?updatedAt=1742438924389)
 ## Contact
 
-Feel free to contact if you have any suggestions!
+Feel free to contact!
 <br/>
 Weiwei WANG / wutamy77@gmail.com
 
